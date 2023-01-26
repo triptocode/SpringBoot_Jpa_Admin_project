@@ -14,7 +14,7 @@ public class CategoryRepositoryTest extends AdminStudyApplicationTests {
     private CategoryRepository categoryRepository;
     @Test
     public void create() {
-        String type = "COMPUTER";
+        String type = "HP";
         String title = "컴퓨터";
         LocalDateTime createdAt = LocalDateTime.now();
         String createdBy = "AdminServer";

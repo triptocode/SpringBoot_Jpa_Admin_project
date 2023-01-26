@@ -3,6 +3,7 @@ package com.example.adminStudy.model.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import net.bytebuddy.asm.Advice;
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor // 모든매개변수가 들어가는 생성자 자동완성
 @NoArgsConstructor
 @Entity // 하단의 User라는 객체(camel_case)에 맞는 table명(snake_case)에 연결
+@ToString(exclude = {"orderGroup"}) // 24. 연관관계설정 -1
 public class User {
 //@Table(name="user")  데이터베이스의 테이블명이랑 클래스명이 같으면 생략가능
 
@@ -31,5 +33,8 @@ public class User {
     private String createdBy;
     private LocalDateTime updatedAt;
     private String updatedBy;
+
+   @OneToMany(fetch = FetchType.LAZY, mappedBy="user") // 24. 연관관계설정 -1
+    private List<OrderGroup> orderGroupList; // 24. 연관관계설정 -1
 
 }
