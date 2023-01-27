@@ -56,12 +56,21 @@ public class UserRepositoryTest extends AdminStudyApplicationTests {
         User user = userRepository.findFirstByPhoneNumberOrderByIdDesc("010-1111-1111");
 
         // 24. 연관관계설정 : 위의 폰번호를 가진 해당 유저한명에 어떤 장바구니가 있는지 읽어오기
-        if(user!=null){
+        if(user!=null) {
             user.getOrderGroupList().stream().forEach(orderGroup -> {
-                System.out.println(" 수령인: " +orderGroup.getRevName() );
-                System.out.println(" 수령지: " +orderGroup.getRevAddress() );
-                System.out.println(" 총금액: " +orderGroup.getTotalPrice() );
-                System.out.println(" 총수량: " +orderGroup.getTotalQuantity() );
+                System.out.println("----------------주문묶음 orderGroup-------------------");
+                System.out.println(" 수령인: " + orderGroup.getRevName());
+                System.out.println(" 수령지: " + orderGroup.getRevAddress());
+                System.out.println(" 총금액: " + orderGroup.getTotalPrice());
+                System.out.println(" 총수량: " + orderGroup.getTotalQuantity());
+
+                    System.out.println("----------------주문상세 orderDetail-------------------");
+                    orderGroup.getOrderDetailList().forEach(orderDetail -> {
+                        System.out.println("주문 상품: " + orderDetail.getItem().getName()); // 25. 연관관계 추가 -  partner N : 1 item
+                        System.out.println("고객센터 번호: " + orderDetail.getItem().getPartner().getCallCenter()); //25. 연관관계 추가 -  partner N : 1 item
+                        System.out.println("주문의 상태: " + orderDetail.getStatus());
+                        System.out.println("도착예정 일자: " + orderDetail.getArrivalDate());
+                    });
             });
         }
          Assert.assertNotNull(user);
